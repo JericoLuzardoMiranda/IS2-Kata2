@@ -11,9 +11,18 @@ public class FoundedOrganizationStatistic implements OrganizationStatistic {
         Map<String, Integer> result = new HashMap<>();
         for (Organization organization : organizations) {
             String country = organization.getCountry();
-            result.put(country, result.getOrDefault(country, 0) + 1);
+            String interval = toInterval(organization.getFounded());
+            String key = country + " - " + interval;
+            result.put(key, result.getOrDefault(key, 0) + 1);
         }
         return result;
+    }
+
+    private String toInterval(int founded) {
+        if (founded < 1900) return "Before 1900";
+        if (founded < 1910) return "1900-1910";
+        if (founded < 1920) return "1900-1920";
+        return "After 1920";
     }
 
 }
